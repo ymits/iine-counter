@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <qriously class="qr-code" value="Hello World!" :size="200" />
+    <v-btn
+      fixed
+      dark
+      fab
+      bottom
+      right
+      color="pink"
+      :click="onAddBtn"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+  // import HelloWorld from '../components/HelloWorld'
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  export default {
+    // components: {
+    //   HelloWorld
+    // },
+
+    methods: {
+      onAddBtn() {
+      }
+    }
   }
-}
 </script>
