@@ -8,12 +8,12 @@
       <v-card>
         <v-card-title class="headline">参加者登録</v-card-title>
 
-        <v-text-field class="entry-name" label="名前"></v-text-field>
+        <v-text-field class="entry-name" label="名前" v-model="entryName"></v-text-field>
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" flat="flat" @click="openDialog = false">キャンセル</v-btn>
-          <v-btn color="green darken-1" flat="flat" @click="openDialog = false">登録</v-btn>
+          <v-btn color="green darken-1" flat="flat" @click="clickSaveBtn">登録</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -22,6 +22,7 @@
 
 <script>
   // import HelloWorld from '../components/HelloWorld'
+  import Player from '@/models/Player';
 
   export default {
     // components: {
@@ -29,7 +30,8 @@
     // },
     data() {
       return {
-        openDialog: false
+        openDialog: false,
+        entryName: null,
       };
     },
 
@@ -42,6 +44,12 @@
     methods: {
       clickAddBtn() {
         this.openDialog = true;
+      },
+
+      clickSaveBtn() {
+        const player = Player.new(this.entryName);
+        player.save();
+        this.openDialog = false;
       }
     }
   }
