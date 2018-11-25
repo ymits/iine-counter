@@ -1,6 +1,6 @@
 <template>
   <v-carousel :cycle="false" style="height:100%">
-    <v-carousel-item v-for="(player,id) in players" :key="id">
+    <v-carousel-item v-for="player in players" :key="player.id">
       <div class="player-name">{{player.name}}</div>
       <div class="score-chart">
         <div class="point">

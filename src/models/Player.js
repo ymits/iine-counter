@@ -19,8 +19,8 @@ export default class Player {
     return score;
   }
 
-  static new(name) {
-    return new Player(++count, name, 0, 0);
+  static of(name) {
+    return new Player('P_' + ++count, name, 0, 0);
   }
 
   static findAll() {
@@ -31,5 +31,9 @@ export default class Player {
       }
       resolve(res);
     });
+  }
+
+  static remove(id) {
+    delete store[id];
   }
 }
