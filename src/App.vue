@@ -29,3 +29,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+
+.application > .application--wrap > .v-content > .v-content__wrap > .container {
+  height: 100%;
+}
+
+</style>

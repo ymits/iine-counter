@@ -13,6 +13,12 @@ export default class Player {
     store[this.id] = this;
   }
 
+  score() {
+    let score = this.goodCount - this.badCount;
+    score = Math.min(score, 0);
+    return score;
+  }
+
   static new(name) {
     return new Player(++count, name, 0, 0);
   }

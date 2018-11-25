@@ -1,16 +1,15 @@
 <template>
-  <v-carousel :cycle="false">
+  <v-carousel :cycle="false" style="height:100%">
     <v-carousel-item v-for="(player,id) in players" :key="id">
       <div class="player-name">{{player.name}}</div>
-      <div class="">
-        <div class="">
-          いいね： {{player.goodCount}}
+      <div class="score-chart">
+        <div class="point">
+          <div class="title">スコア</div>
+          <div class="score">{{player.goodCount - player.badCount}}</div>
         </div>
-        <div class="">
-          よくないね： {{player.badCount}}
-        </div>
+        <score-chart :width="200" :height="200" :goodCount="player.goodCount" :badCount="player.badCount"></score-chart>
       </div>
-      <v-layout align-center row fill-height>
+      <v-layout align-top row>
         <v-flex xs6>
           <v-btn block large color="deep-orange" @click="clickBadBtn(player.id)">
             <v-icon>thumb_down</v-icon>
@@ -28,8 +27,13 @@
 
 <script>
 import Player from '@/models/Player';
+import ScoreChart from '../components/ScoreChart';
 
 export default {
+  components: {
+    ScoreChart
+  },
+
   data() {
     return {
       players: []
@@ -38,7 +42,6 @@ export default {
 
   mounted() {
     Player.findAll().then((players) => {
-      console.log(players);
       this.players = players;
     });
   },
@@ -58,6 +61,14 @@ export default {
       return this.players.find((player) => {
         return player.id == id;
       });
+    }
+  },
+
+  computed: {
+    playerScore () {
+      return (player) => {
+        return player.score();
+      };
     }
   }
 }
@@ -86,6 +97,34 @@ export default {
     bottom: -20px;
     z-index: 10;
     top: auto;
+  }
+
+  /deep/ .v-carousel__item {
+    height: 100% !important;
+  }
+
+  .score-chart {
+    position: relative;
+
+    .point {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      margin-left: -100px;
+
+      text-align: center;
+
+      transform:translateY(-40%);
+
+      .title {
+        font-size: 24px;
+      }
+
+      .score {
+        font-size: 48px;
+      }
+    }
   }
 }
 
