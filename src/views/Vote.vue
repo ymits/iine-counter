@@ -105,6 +105,9 @@ export default {
 
   .score-chart {
     position: relative;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 
     .point {
       position: absolute;
