@@ -1,6 +1,7 @@
-import socket from '@/socket';
+let store = {};
+let count = 0;
 
-export default class Player {
+class Player {
   constructor(id, name, goodCount, badCount) {
     this.id = id;
     this.name = name;
@@ -9,7 +10,10 @@ export default class Player {
   }
 
   save() {
-    socket.emit('player/save', this);
+    if (this.id == null) {
+      this.id = 'P_' + ++count;
+    }
+    store[this.id] = this;
   }
 
   score() {
@@ -20,22 +24,19 @@ export default class Player {
     return Object.assign(new Player(), json);
   }
 
-  static ofName(name) {
-    return new Player(null, name, 0, 0);
-  }
-
   static findAll() {
     return new Promise(function(resolve) {
-      socket.emit('player/list', (players) => {
-        const res = players.map((data) => {
-          return Player.of(data);
-        });
-        resolve(res);
-      });
+      const res = [];
+      for (let id in store) {
+        res.push(store[id]);
+      }
+      resolve(res);
     });
   }
 
   static remove(id) {
-    socket.emit('player/remove', id);
+    delete store[id];
   }
 }
+
+module.exports = Player;

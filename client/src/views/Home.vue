@@ -60,7 +60,7 @@
       },
 
       clickSaveBtn() {
-        const player = Player.of(this.entryName);
+        const player = Player.ofName(this.entryName);
         player.save();
         this.openDialog = false;
       },
