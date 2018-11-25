@@ -5,9 +5,10 @@
         <span>いいねホイホイ</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items :class="{ 'hidden': $route.path==='/vote' }">
         <v-btn flat to="/">Home</v-btn>
         <v-btn flat to="/vote">Vote</v-btn>
+        <v-btn flat to="/voteResult">Vote Result</v-btn>
       </v-toolbar-items>
     </v-toolbar>
 
@@ -34,6 +35,10 @@ export default {
 
 .application > .application--wrap > .v-content > .v-content__wrap > .container {
   height: 100%;
+}
+
+.hidden {
+  display: none;
 }
 
 </style>

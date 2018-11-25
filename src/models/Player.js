@@ -14,9 +14,7 @@ export default class Player {
   }
 
   score() {
-    let score = this.goodCount - this.badCount;
-    score = Math.min(score, 0);
-    return score;
+    return this.goodCount - this.badCount;
   }
 
   static of(name) {

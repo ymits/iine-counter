@@ -62,14 +62,6 @@ export default {
         return player.id == id;
       });
     }
-  },
-
-  computed: {
-    playerScore () {
-      return (player) => {
-        return player.score();
-      };
-    }
   }
 }
 </script>
