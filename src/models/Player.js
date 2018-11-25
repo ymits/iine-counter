@@ -16,6 +16,14 @@ class Player {
     store[this.id] = this;
   }
 
+  goodCountUp() {
+    this.goodCount++;
+  }
+
+  badCountUp() {
+    this.badCount++;
+  }
+
   score() {
     return this.goodCount - this.badCount;
   }
@@ -31,6 +39,12 @@ class Player {
         res.push(store[id]);
       }
       resolve(res);
+    });
+  }
+
+  static findById(id) {
+    return new Promise(function(resolve) {
+      resolve(store[id]);
     });
   }
 

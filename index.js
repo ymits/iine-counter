@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/client/dist/index.html');
 });
 
-io.of('/api').on('connection', (socket) => {
+var api = io.of('/api').on('connection', (socket) => {
   // socket.emit('news', { hello: 'world' });
   const Player = require('./src/models/Player');
   socket.on('player/save', (data) => {
@@ -28,5 +28,19 @@ io.of('/api').on('connection', (socket) => {
 
   socket.on('player/remove', (id) => {
     Player.remove(id);
+  });
+
+  socket.on('player/goodCountUp', (id) => {
+    Player.findById(id).then((player) => {
+      player.goodCountUp();
+      api.emit('player/update', player);
+    });
+  });
+
+  socket.on('player/badCountUp', (id) => {
+    Player.findById(id).then((player) => {
+      player.badCountUp();
+      api.emit('player/update', player);
+    });
   });
 });

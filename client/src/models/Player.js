@@ -12,6 +12,14 @@ export default class Player {
     socket.emit('player/save', this);
   }
 
+  goodCountUp() {
+    socket.emit('player/goodCountUp', this.id);
+  }
+
+  badCountUp() {
+    socket.emit('player/badCountUp', this.id);
+  }
+
   score() {
     return this.goodCount - this.badCount;
   }

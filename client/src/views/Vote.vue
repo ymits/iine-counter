@@ -49,18 +49,26 @@ export default {
   methods: {
     clickGoodBtn(id) {
       const player = this._findPlayerById(id);
-      player.goodCount++;
+      player.goodCountUp();
     },
 
     clickBadBtn(id) {
       const player = this._findPlayerById(id);
-      player.badCount++;
+      player.badCountUp();
     },
 
     _findPlayerById(id) {
       return this.players.find((player) => {
         return player.id == id;
       });
+    }
+  },
+
+  sockets: {
+    'player/update'(json) {
+        const player = this._findPlayerById(json.id);
+        player.goodCount = json.goodCount;
+        player.badCount = json.badCount;
     }
   }
 }

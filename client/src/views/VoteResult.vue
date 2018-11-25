@@ -23,16 +23,12 @@ export default {
   mounted() {
     Player.findAll().then((players) => {
       this.players = players;
+      this.updateChartData();
     });
   },
 
   methods: {
-
-  },
-
-  watch: {
-    players () {
-      console.log("change player");
+    updateChartData() {
       this.chartData = {
         labels: this.players.map((player) => {
           return player.name;
@@ -48,6 +44,21 @@ export default {
           }
         ]
       };
+    },
+
+    _findPlayerById(id) {
+      return this.players.find((player) => {
+        return player.id == id;
+      });
+    }
+  },
+
+  sockets: {
+    'player/update'(json) {
+        const player = this._findPlayerById(json.id);
+        player.goodCount = json.goodCount;
+        player.badCount = json.badCount;
+        this.updateChartData();
     }
   }
 }
