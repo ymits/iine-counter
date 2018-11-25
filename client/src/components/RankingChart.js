@@ -10,6 +10,14 @@ export default {
         title: {
           display: true,
           text: 'スコア結果'
+        },
+        scales: {
+          yAxes: [{
+            display: true,
+            ticks: {
+              suggestedMin: 0
+            }
+          }]
         }
       }
     }
