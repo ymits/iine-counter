@@ -17,15 +17,70 @@
         <router-view/>
       </v-container>
     </v-content>
+
+    <audio id="good-sound-file" preload="auto">
+      <source src="good.mp3" type="audio/mp3" />
+      <source src="good.wav" type="audio/wav" />
+    </audio>
+    <audio id="bad-sound-file" preload="auto">
+      <source src="bad.mp3" type="audio/mp3" />
+      <source src="bad.wav" type="audio/wav" />
+    </audio>
   </v-app>
 </template>
 
 <script>
+import Player from '@/models/Player';
+
 export default {
   name: 'App',
-  data () {
+  data() {
     return {
-      //
+      goodAudio: null,
+      badAudio: null,
+      players: []
+    };
+  },
+
+  mounted() {
+    this.goodAudio = this.$el.querySelector('#good-sound-file');
+    this.badAudio = this.$el.querySelector('#bad-sound-file');
+    Player.findAll().then((players) => {
+      this.players = players;
+    });
+  },
+
+  methods: {
+    _findPlayerById(id) {
+      return this.players.find((player) => {
+        return player.id == id;
+      });
+    },
+
+    _playAudio(audio1, audio2) {
+      if (audio1.currentTime != null) {
+        audio1.pause();
+        audio1.currentTime = 0;
+      }
+      if (audio2.currentTime != null) {
+        audio2.pause();
+        audio2.currentTime = 0;
+      }
+      audio1.play();
+    }
+  },
+
+  sockets: {
+    'player/update'(json) {
+        const player = this._findPlayerById(json.id);
+        if (player.badCount < json.badCount) {
+          this._playAudio(this.badAudio, this.goodAudio);
+        }
+        if (player.goodCount < json.goodCount) {
+          this._playAudio(this.goodAudio, this.badAudio);
+        }
+        player.goodCount = json.goodCount;
+        player.badCount = json.badCount;
     }
   }
 }
