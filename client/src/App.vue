@@ -44,9 +44,7 @@ export default {
 
   mounted() {
     this.goodAudio = this.$el.querySelector('#good-sound-file');
-    this.goodAudio.volume = 0.3;
     this.badAudio = this.$el.querySelector('#bad-sound-file');
-    this.badAudio.volume = 0.3;
     Player.findAll().then((players) => {
       this.players = players;
     });
@@ -68,13 +66,18 @@ export default {
         audio2.pause();
         audio2.currentTime = 0;
       }
+      audio1.volume = 0.3;
       audio1.play();
     }
   },
 
   sockets: {
     'player/update'(json) {
-        const player = this._findPlayerById(json.id);
+        let player = this._findPlayerById(json.id);
+        if (player == null) {
+          player = Player.of(json);
+          this.players.push(player);
+        }
         if (player.badCount < json.badCount) {
           this._playAudio(this.badAudio, this.goodAudio);
         }
