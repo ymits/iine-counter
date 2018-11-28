@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <qriously class="qr-code" value="Hello World!" :size="200" />
+    <qriously class="qr-code" value="http://54.168.135.177/vote" :size="200" />
     <v-list subheader>
       <v-subheader>参加者一覧</v-subheader>
       <template v-for="(player, index) in players">
