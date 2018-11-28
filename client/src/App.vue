@@ -44,7 +44,9 @@ export default {
 
   mounted() {
     this.goodAudio = this.$el.querySelector('#good-sound-file');
+    this.goodAudio.volume = 0.3;
     this.badAudio = this.$el.querySelector('#bad-sound-file');
+    this.badAudio.volume = 0.3;
     Player.findAll().then((players) => {
       this.players = players;
     });
